@@ -28,6 +28,3 @@ body {
     @apply origin-bottom-left -rotate-45
 }
 
-#dark-toggle:checked ~ label div.toggle-circle {
-    @apply translate-x-3
-}

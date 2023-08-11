@@ -47,3 +47,40 @@ darkToggle.addEventListener('click', function() {
         html.classList.remove('dark');
     }
 });
+
+function submitForm(event) {
+    event.preventDefault(); // Mencegah perilaku default formulir
+    var name = document.getElementById("name").value;
+    var email = document.getElementById("email").value;
+    var message = document.getElementById("message").value;
+
+  // Validasi
+    if (name === "" || email === "" || message === "") {
+        alert("Please fill out all fields before submitting the form.");
+        return false; // Mencegah pengiriman formulir
+    }
+
+  // Mengubah teks tombol menjadi "Mengirim..."
+    var submitButton = document.getElementById("submitButton");
+    submitButton.innerHTML = "Sending...";
+    
+    // Dapatkan formulir yang dikirim
+    var form = event.target;
+  
+    // Kirim formulir menggunakan XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+    xhr.open(form.method, form.action, true);
+    xhr.setRequestHeader('Accept', 'application/json');
+    xhr.onreadystatechange = function() {
+      if (xhr.readyState === 4 && xhr.status === 200) {
+        // Tangani respons sukses di sini, jika perlu
+        console.log('Form berhasil dikirim:', xhr.responseText);
+        submitButton.innerText = "Completed Sending";
+      } else {
+        // Tangani kesalahan di sini, jika perlu
+        console.error('Terjadi kesalahan saat mengirim formulir');
+        submitButton.innerText = "Failed";
+      }
+    };
+    xhr.send(new FormData(form));
+  }
